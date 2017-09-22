@@ -130,9 +130,9 @@ func NewOAuthProxy(opts *Options, validator func(string) bool) *OAuthProxy {
 			log.Printf("mapping path %q => upstream %q", path, u)
 			proxy := NewWebsocketReverseProxy(u)
 			if !opts.PassHostHeader {
-				setProxyUpstreamHostHeader(proxy, u)
+				setProxyUpstreamHostHeader(proxy.Proxy, u)
 			} else {
-				setProxyDirector(proxy)
+				setProxyDirector(proxy.Proxy)
 			}
 			serveMux.Handle(path,
 				&UpstreamProxy{u.Host, proxy, auth})
